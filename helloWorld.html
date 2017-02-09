@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hello world</title>
+    <style>
+      .c1{
+        background: #444;
+        color: #eee;
+      }
+    </style>
+    <script src="vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <label for="r1">change color</label>
+        <input type="checkbox" v-model="c1" id="r1" />
+        <p v-bind:class="{'c1': c1}">
+          hello world!
+        </p>
+        <p>{{ ok ? 'YES' : "NO"}}</p>
+        <p v-if="ok">now you can see me</p>
+        <div>
+          <p>{{message}}</p>
+          <input v-model="message" />
+        </div>
+
+        <p v-bind:title="time">
+          Hover your mouse over me for a few seconds to see my dynamically bound title!
+        </p>
+
+        <ol>
+          <li v-for="todo in todos">
+            {{todo.text}}
+          </li>
+        </ol>
+
+        <ol>
+          <todo-item v-for="item in todos" v-bind:todo="item"></todo-item>
+        </ol>
+    </div>
+
+    <script>
+      // 需要先定义组件
+      Vue.component('todo-item',{
+        props : ['todo'],
+        template : '<li>{{todo.text}}</li>'
+      });
+
+      new Vue({
+          el: "#app",
+          data: {
+            c1 : false,
+            ok : true,
+            message : "hello world",
+            time : "You loaded this page on " + new Date(),
+            todos : [
+              {text : 'Learn javascript'},
+              {text : 'Learn Vue'},
+              {text : 'Build something awesome'}
+            ]
+          }
+        });
+    </script>
+</body>
+</html>
