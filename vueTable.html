@@ -4,7 +4,82 @@
     <meta charset="UTF-8">
     <title></title>
     <style>
+      *{
+        margin: 0;
+        padding: 0;
+      }
+      html{
+        font-size: 16px;
+      }
 
+      #app{
+        width: 40%;
+        margin: 30px auto;
+      }
+
+      table,
+      td,
+      th{
+        border-collapse: collapse;
+        border-spacing: 0;
+        border: 1px solid #bcbcbc;
+        padding: 5px 10px;
+      }
+      table{
+        width: 100%;
+        text-align: center;
+      }
+      tr:nth-of-type(even){
+        background-color: #eee;
+      }
+      th{
+        background-color: #42b893;
+        color: #fff;
+      }
+
+      fieldset{
+        border: 1px solid #bcbcbc;
+        padding: 20px;
+      }
+      input{
+        outline: none;
+      }
+      input[type=text]{
+        border: 1px solid #ccc;
+        padding: .2rem;
+      }
+      input[type=text]:focus{
+        border-color: #42b983;
+      }
+      button{
+        outline: none;
+        padding: 5px 8px;
+        color: #fff;
+        border: 1px solid transparent;
+        border-radius: 3px;
+        background-color: #009a62;
+        cursor: pointer;
+      }
+      button:hover{
+        opacity: .8;
+      }
+
+      .form-group{
+        margin: 10px;
+      }
+      .form-group > label{
+        display: inline-block;
+        width: 80px;
+        text-align: right;
+      }
+      .form-group > input,
+      .form-group > select{
+        display: inline-block;
+        height: 20px;
+      }
+      .form-group > select{
+        height: 25px;
+      }
     </style>
     <script src="vue.min.js"></script>
 </head>
@@ -29,7 +104,7 @@
             <option value="Female">Female</option>
           </select>
         </div>
-        <div>
+        <div class="form-group">
           <label></label>
           <button @click="addPerson">Add</button>
         </div>
