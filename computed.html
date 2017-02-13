@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+    </style>
+    <script src="vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+      <p>Original message: "{{message}}"</p>
+      <p>Computed reverse message: "{{reversedMessage}}"</p>
+    </div>
+
+    <div id="app2">
+      <p>{{fullName}}</p>
+    </div>
+
+    <script>
+      var vm = new Vue({
+          el: "#app",
+          data: {
+            message : "hello world"
+          },
+          computed : {
+            reversedMessage : function(){
+              return this.message.split('').reverse().join('');
+            }
+          }
+        });
+
+      /*
+      ** use watch
+      var vm2 = new Vue({
+        el : '#app2',
+        data : {
+          firstName : "Foo",
+          lastName : 'Bar',
+          fullName : 'Foo Bar'
+        },
+        watch : {
+          firstName : function(val){
+            this.fullName = val + ' ' + this.lastName;
+          },
+          lastName : function(val){
+            this.fullName = this.firstName + ' ' + val;
+          }
+        }
+      });
+      */
+
+      // use computed
+      var vm2 = new Vue({
+        el : "#app2",
+        data : {
+          firstName : "Foo",
+          lastName : 'Bar'
+        },
+        computed : {
+          fullName : function(){
+            return this.firstName + ' ' + this.lastName;
+          }
+        }
+      });
+    </script>
+</body>
+</html>
