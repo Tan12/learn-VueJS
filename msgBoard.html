@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>留言板</title>
+    <style>
+      *{
+        margin: 0;
+        padding: 0;
+      }
+      body{
+        width: 80%;
+        margin: 0 auto;
+        font-size: 16px;
+      }
+      h1{
+        text-align: center;
+        padding: 30px 0;
+        color: #428bca;
+      }
+      input{
+        padding: 6px;
+        width: 400px;
+        border: 1px solid #666;
+      }
+      input,
+      button,
+      .p-title,
+      .msg-list li{
+        border-radius: 3px;
+      }
+      button{
+        color: #fff;
+        background-color: rgba(66, 139, 202, 1);
+        opacity: .8;
+        border: 1px solid transparent;
+        padding: 5px 10px;
+        cursor: pointer;
+      }
+      button:hover{
+        opacity: 1;
+      }
+      li{
+        list-style: none;
+      }
+      #app{
+        margin-top: 30px;
+        text-align: center;
+      }
+      .msg-list{
+        width: 960px;
+        margin: 30px auto;
+        min-height: 90px;
+      }
+      .msg-list,
+      .msg-list li{
+        border: 1px solid #ccc;
+      }
+      .msg-list .p-title{
+        font-weight: bold;
+        background-color: #eee;
+        border-bottom: 1px solid #ccc;
+      }
+      .msg-list .p-title,
+      .msg-list li{
+        text-align: left;
+        padding: 10px;
+      }
+      .msg-list li{
+        margin: 10px;
+      }
+      .msg-list .clear{
+        background-color: rgba(217, 83, 79, 1);
+        text-align: center;
+        margin: 20px 0;
+      }
+    </style>
+    <script src="vue.min.js"></script>
+</head>
+<body>
+    <h1>留言板</h1>
+    <hr />
+    <div id="app">
+      <input type="text" v-model='newMsg' @keyup.enter='addMsg' placeholder="请输入留言..." />
+      <button @click='addMsg'>提交</button>
+      <div class="msg-list">
+        <p class="p-title">留言列表</p>
+        <ul>
+          <li v-for="msg in msgs">{{ msg }}</li>
+        </ul>
+        <button @click='removeMsg' class="clear" id="clearmsg">清除留言</button>
+      </div>
+    </div>
+
+    <script>
+      var STORAGE_KEY = 'messages';
+      var msgStorage = {  // 将留言存储在本地
+        fetch : function(){
+          var msgs = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+          console.log(msgs);
+          msgStorage.display(msgs);
+          return msgs;
+        },
+        save : function(msgs){
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(msgs));
+        },
+        display : function(msgs){
+            if(msgs.length > 0){
+              document.getElementById('clearmsg').style.display = '';
+            }else {
+              document.getElementById('clearmsg').style.display = 'none';
+            }
+        }
+      };
+      var vm = new Vue({
+        el : '#app',
+        data : {
+          newMsg : '',
+          msgs : msgStorage.fetch()
+        },
+        watch : { // 监听msgs，将更新就存到本地存储
+          msgs : {
+            handler : function(msgs){
+                msgStorage.save(msgs);
+                msgStorage.display(msgs);
+            }
+          }
+        },
+        methods : {
+          addMsg : function(){
+            var value = this.newMsg;
+            if(!value) return;
+            this.msgs.push(value);
+            this.newMsg = '';
+          },
+          removeMsg : function(){
+            this.msgs = [];
+          }
+        }
+      });
+    </script>
+</body>
+</html>
